@@ -3,6 +3,7 @@ const { v4: uuidv4 } = require("uuid");
 const formatResult = require("../helpers/formatResult");
 const bcrypt = require("bcrypt");
 const { validAuthUser } = require("../helpers/validator");
+const { getToken } = require("../helpers/jwtHelper");
 const User = db.user;
 
 exports.create = async (req, res) => {
@@ -34,7 +35,8 @@ exports.login = async (req, res) => {
     const password = bcrypt.compareSync(req.body.password, checkEmail.password);
     if (password) {
       delete checkEmail.password;
-      formatResult(res, 200, true, "Login Success", checkEmail);
+      const token = getToken(checkEmail);
+      formatResult(res, 200, true, "Login Success", { ...checkEmail, token });
     } else {
       formatResult(res, 400, false, "Password Incorrect", null);
     }
