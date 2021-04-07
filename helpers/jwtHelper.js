@@ -4,7 +4,7 @@ require("dotenv").config();
 module.exports = {
   getToken: (value) => {
     try {
-      const token = jwt.sign(value, process.env.SECRET_KEY, { expiresIn: "1h" });
+      const token = jwt.sign(value, process.env.SECRET_KEY, { expiresIn: "1d" });
       return token;
     } catch (error) {
       return new Error(error).message;
@@ -21,6 +21,33 @@ module.exports = {
   verifyToken: (req) => {
     try {
       jwt.verify(req.headers["authorization"].split(" ")[1], process.env.SECRET_KEY);
+      return true;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  getTokenRefresh: (value) => {
+    try {
+      const token = jwt.sign(value, process.env.SECRET_KEY_REFRESH, { expiresIn: "30d" });
+      return token;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  decodeTokenRefresh: (req) => {
+    try {
+      const decode = jwt.verify(
+        req.headers["authorization"].split(" ")[1],
+        process.env.SECRET_KEY_REFRESH
+      );
+      return decode;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  verifyTokenRefresh: (req) => {
+    try {
+      jwt.verify(req.headers["authorization"].split(" ")[1], process.env.SECRET_KEY_REFRESH);
       return true;
     } catch (error) {
       return new Error(error).message;

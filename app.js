@@ -13,8 +13,14 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/avatar", express.static("./upload"));
+
 // Sync Database
-db.sequelize.sync();
+db.sequelize.sync().then(
+  () => console.log(`[DATABASES] Connected`),
+  (err) => console.log(`[DATABASES] Failed To Connect (${err})`)
+);
+
+app.use("/v1", Routes);
 
 app.use("*", (req, res) => {
   if (req.params["0"].match("/v1")) {
@@ -31,8 +37,6 @@ app.get("/", (req, res) => {
     message: "Welcome to REST API",
   });
 });
-
-app.use("/v1", Routes);
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

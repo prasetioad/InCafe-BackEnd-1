@@ -13,8 +13,10 @@ const {
   getTokenVerify,
   decodeTokenVerify,
   verifyTokenVerify,
+  getTokenRefresh,
+  decodeTokenRefresh,
 } = require("../helpers/jwtHelper");
-const e = require("express");
+const sendMail = require("../middleware/mailer");
 const User = db.user;
 
 exports.register = (req, res) => {
@@ -28,6 +30,12 @@ exports.register = (req, res) => {
         req.body.password = await bcrypt.hash(req.body.password, 10).then((result) => result);
         User.create(req.body)
           .then(() => {
+            sendMail(req.body.email, {
+              name: req.body.email.split("@")[0],
+              text: `Sebelum Menggunakan Aplikasi Anda Harus Verifikasi Email`,
+              url: `${process.env.DOMAIN}/verify?token=${getTokenVerify(req.body)}`,
+              textBtn: "Verif Now",
+            });
             formatResult(res, 201, true, "Success Register, Please Verify Your Email!", {
               userId: req.body.userId,
               email: req.body.email,
@@ -71,7 +79,8 @@ exports.login = async (req, res) => {
       if (password) {
         delete checkEmail.password;
         const token = getToken(checkEmail);
-        formatResult(res, 200, true, "Login Success", { ...checkEmail, token });
+        const refreshToken = getTokenRefresh(checkEmail);
+        formatResult(res, 200, true, "Login Success", { ...checkEmail, token, refreshToken });
       } else {
         formatResult(res, 400, false, "Password Incorrect", null);
       }
@@ -177,4 +186,21 @@ exports.getData = (req, res) => {
     .catch((err) => {
       formatResult(res, 500, false, err, null);
     });
+};
+
+exports.getNewToken = async (req, res) => {
+  if (req.headers["authorization"]) {
+    const checkEmail = decodeTokenRefresh(req);
+    if (!checkEmail.active) {
+      formatResult(res, 400, false, "Email Not Verify, Please Verify Your Email!", null);
+    } else {
+      delete checkEmail.iat;
+      delete checkEmail.exp;
+      const token = getToken(checkEmail);
+      const refreshToken = getTokenRefresh(checkEmail);
+      formatResult(res, 200, true, "Login Success", { ...checkEmail, token, refreshToken });
+    }
+  } else {
+    formatResult(res, 400, false, "Email Not Registered", null);
+  }
 };
