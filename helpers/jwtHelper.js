@@ -3,23 +3,81 @@ require("dotenv").config();
 
 module.exports = {
   getToken: (value) => {
-    const token = jwt.sign(value, process.env.SECRET_KEY, { expiresIn: "1h" });
-    return token;
-  },
-  decodeToken: (token) => {
-    const decode = jwt.verify(token, process.env.SECRET_KEY);
-    if (decode) {
-      return decode;
-    } else {
-      return null;
+    try {
+      const token = jwt.sign(value, process.env.SECRET_KEY, { expiresIn: "1h" });
+      return token;
+    } catch (error) {
+      return new Error(error).message;
     }
   },
-  verifyToken: (token) => {
-    const decode = jwt.verify(token, process.env.SECRET_KEY);
-    if (decode) {
+  decodeToken: (req) => {
+    try {
+      const decode = jwt.verify(req.headers["authorization"].split(" ")[1], process.env.SECRET_KEY);
+      return decode;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  verifyToken: (req) => {
+    try {
+      jwt.verify(req.headers["authorization"].split(" ")[1], process.env.SECRET_KEY);
       return true;
-    } else {
-      return false;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  getTokenReset: (value) => {
+    try {
+      const token = jwt.sign(value, process.env.SECRET_KEY_RESET, { expiresIn: "1h" });
+      return token;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  decodeTokenReset: (req) => {
+    try {
+      const decode = jwt.verify(
+        req.headers["authorization"].split(" ")[1],
+        process.env.SECRET_KEY_RESET
+      );
+      return decode;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  verifyTokenReset: (req) => {
+    try {
+      jwt.verify(req.headers["authorization"].split(" ")[1], process.env.SECRET_KEY_RESET);
+      return true;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  getTokenVerify: (value) => {
+    try {
+      const token = jwt.sign(value, process.env.SECRET_KEY_VERIF, { expiresIn: "1h" });
+      return token;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  decodeTokenVerify: (req) => {
+    try {
+      const decode = jwt.verify(
+        req.headers["authorization"].split(" ")[1],
+        process.env.SECRET_KEY_VERIF
+      );
+      return decode;
+    } catch (error) {
+      return new Error(error).message;
+    }
+  },
+  verifyTokenVerify: (req) => {
+    try {
+      jwt.verify(req.headers["authorization"].split(" ")[1], process.env.SECRET_KEY_VERIF);
+      return true;
+    } catch (error) {
+      return new Error(error).message;
     }
   },
 };
