@@ -1,7 +1,9 @@
 module.exports = (sequelize, Sequelize) => {
   const User = sequelize.define("user", {
     userId: {
-      type: Sequelize.STRING,
+      type: Sequelize.INTEGER,
+      autoIncrement: true,
+      primaryKey: true 
     },
     firstName: {
       type: Sequelize.STRING(64),
