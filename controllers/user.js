@@ -53,13 +53,27 @@ exports.verify = (req, res) => {
   if (verify !== true) return formatResult(res, 400, false, verify, null);
   const decode = decodeTokenVerify(req);
   const email = decode.email;
-  User.update({ active: true }, { where: { email } })
-    .then(() => {
-      formatResult(res, 200, true, "Success Active Your Account!", null);
-    })
-    .catch((err) => {
-      formatResult(res, 400, false, err, null);
-    });
+  User.findOne({ where: { email } }).then((resultCheck) => {
+    if (resultCheck) {
+      if (!resultCheck.dataValues.active) {
+        User.update({ active: true }, { where: { email } })
+          .then((result) => {
+            if (result[0] === 1) {
+              formatResult(res, 200, true, "Success Active Your Account!", null);
+            } else {
+              formatResult(res, 404, false, "Account Not Found", null);
+            }
+          })
+          .catch((err) => {
+            formatResult(res, 400, false, err, null);
+          });
+      } else {
+        formatResult(res, 400, false, "Your Account Already Actived", null);
+      }
+    } else {
+      formatResult(res, 404, false, "Account Not Found", null);
+    }
+  });
 };
 
 exports.login = async (req, res) => {
@@ -199,4 +213,29 @@ exports.getNewToken = async (req, res) => {
   } else {
     formatResult(res, 400, false, "Email Not Registered", null);
   }
+};
+
+exports.resendMail = (req, res) => {
+  const email = req.body.email;
+  User.findOne({ where: { email } })
+    .then(async (result) => {
+      if (result) {
+        if (!result.dataValues.active) {
+          await sendMail(req.body.email, {
+            name: req.body.email.split("@")[0],
+            text: `Sebelum Menggunakan Aplikasi Anda Harus Verifikasi Email`,
+            url: `${process.env.DOMAIN}/verify?token=${getTokenVerify(req.body)}`,
+            textBtn: "Verif Now",
+          });
+          formatResult(res, 200, true, "Success Resend Verify Mail", null);
+        } else {
+          formatResult(res, 400, false, "Account Already Active", null);
+        }
+      } else {
+        formatResult(res, 404, false, "Account Not Found", null);
+      }
+    })
+    .catch((err) => {
+      formatResult(res, 500, false, err, null);
+    });
 };
