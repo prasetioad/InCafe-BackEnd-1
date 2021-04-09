@@ -36,11 +36,7 @@ exports.register = (req, res) => {
               url: `${process.env.DOMAIN}/verify?token=${getTokenVerify(req.body)}`,
               textBtn: "Verif Now",
             });
-            formatResult(res, 201, true, "Success Register, Please Verify Your Email!", {
-              userId: req.body.userId,
-              email: req.body.email,
-              token: getTokenVerify(req.body),
-            });
+            formatResult(res, 201, true, "Success Register, Please Verify Your Email!", null);
           })
           .catch((err) => {
             formatResult(res, 500, false, err, null);
