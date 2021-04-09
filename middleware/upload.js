@@ -15,11 +15,11 @@ const storage = multer.diskStorage({
     }
     cb(null, "./upload");
   },
-  filename: function (reqs, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, Date.now() + "_" + file.originalname);
   },
 });
-
+ 
 const upload = (name) =>
   multer({
     storage: storage,
@@ -50,7 +50,7 @@ const middleUpload = (key) => (req, res, next) => {
       }
     } else {
       next();
-    }
+    } 
   });
 };
 

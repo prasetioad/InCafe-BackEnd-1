@@ -62,7 +62,6 @@ exports.deleteData = (req, res) => {
 
 exports.updateData = (req, res) => {
   const productId = req.params.id;
-  console.log("ini adalah params = ", productId);
   Product.update(req.body, { where: { id: productId } })
     .then((result) => {
       if (result[0] === 1) {

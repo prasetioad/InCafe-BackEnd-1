@@ -13,6 +13,8 @@ db.sequelize = sequelize;
 
 db.user = require("./user")(sequelize, Sequelize);
 db.product = require("./product")(sequelize, Sequelize);
+db.feedback = require("./feedback")(sequelize, Sequelize);
+db.promo = require("./promo")(sequelize, Sequelize)
 db.ordered = require("./ordered_product")(sequelize, Sequelize);
 db.transaction = require("./transaction")(sequelize, Sequelize);
 
