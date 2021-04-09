@@ -11,6 +11,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(64),
       defaultValue: "cafe",
     },
+    displayName: {
+      type: Sequelize.STRING(20),
+      defaultValue: "Sweetest Customers",
+    },
     email: {
       type: Sequelize.STRING(64),
     },
@@ -43,6 +47,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING,
       defaultValue:
         "https://img.freepik.com/free-vector/coffee-love-foam-with-beans-cartoon-icon-illustration_138676-2575.jpg",
+    },
+    active: {
+      type: Sequelize.BOOLEAN,
+      defaultValue: false,
     },
   });
 

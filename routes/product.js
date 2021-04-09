@@ -1,12 +1,14 @@
 const product = require("../controllers/product");
-const { route } = require("./user");
+const { AuthAdmin } = require("../middleware/auth");
+const middleUpload = require("../middleware/upload");
 
 const router = require("express").Router();
 
-router.post("/", product.create);
+router.post("/",  middleUpload("image"), product.create);
 router.get("/", product.getData);
-router.delete("/:id", product.deleteData);
+router.delete("/:id", AuthAdmin, product.deleteData);
 router.get("/:id", product.getDataById);
-router.put("/:id", product.updateData)
+router.put("/:id", AuthAdmin, middleUpload("image"), product.updateData);
+router.post("/category/:category", product.getDataByCategory)
 
-module.exports = router;
+module.exports = router; 

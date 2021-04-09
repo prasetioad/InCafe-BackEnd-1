@@ -1,23 +1,27 @@
 const db = require("../models");
-const { v4: uuidv4 } = require("uuid");
 const formatResult = require("../helpers/formatResult");
 const Product = db.product;
 
 exports.create = (req, res) => {
-    const{ name, price, description, size, startHour, endHour, stock, deliveryMethod} = req.body
-    const data = { productId : uuidv4(), name, price, description, size, startHour, endHour, stock, deliveryMethod}
-    Product.create(data)
-      .then(() => {
-        formatResult(res, 201, true, "Product Created!", {data});
-      })
-      .catch((err) => {
-        formatResult(res, 500, false, err, null);
-      });
+  Product.create(req.body)
+    .then((result) => {
+      formatResult(res, 201, true, "Product Created!", result.dataValues);
+    })
+    .catch((err) => {
+      formatResult(res, 500, false, err, null);
+    });
 };
 
 exports.getData = (req, res) => {
   Product.findAll()
     .then((result) => {
+      if (result.length > 0) {
+        const dataResult = result.map((item) => {
+          item.size = JSON.parse(item.size);
+          item.deliveryMethod = JSON.parse(item.deliveryMethod);
+          return item;
+        });
+      }
       formatResult(res, 200, true, "Success Get Product!", result);
     })
     .catch((err) => {
@@ -25,43 +29,73 @@ exports.getData = (req, res) => {
     });
 };
 
-exports.getDataById =(req, res) =>{
-    const productId = req.params.id
-    console.log(productId);
-    Product.findOne({ where: { productId }, order: ["productId"] })
-    .then((result)=>{
-        formatResult(res, 200, true, "Success Get Product!", result);
+exports.getDataById = (req, res) => {
+  
+  console.log(req.params);
+  const id = req.params.id;
+  Product.findOne({
+    where: { id },
+    order: ["id"],
+  })
+    .then((result) => {
+      result.size = JSON.parse(result.size);
+      result.deliveryMethod = JSON.parse(result.deliveryMethod);
+      formatResult(res, 200, true, "Success Get Product!", result);
     })
-    .catch((err) =>{
-        formatResult(res, 500, false, err, "Smething Wrong!");
-    })
-}
+    .catch(() => {
+      formatResult(res, 404, false, "productId Not Found", null);
+    });
+};
 
-exports.deleteData = (req, res) =>{   
-    console.log(req.params.id);    
-    Product.destroy({
-        where: {
-            productId: req.params.id
-          }
+exports.deleteData = (req, res) => {
+  Product.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then(() => {
+      formatResult(res, 201, true, "Product Deleted!", null);
     })
-    .then((result) =>{
-        formatResult(res, 201, true, "Product Deleted!", result);
-    })
-    .catch((err)=>{
-        formatResult(res, 500, false, " Fail Delete Product!", err); 
-    })
-}
+    .catch((err) => {
+      formatResult(res, 500, false, err, null);
+    });
+};
 
 exports.updateData = (req, res) => {
-    const productId = req.params.id
-    const { name, price, description, size, startHour, endHour, stock, deliveryMethod } = req.body
-    const data = { name, price, description, size, startHour, endHour, stock, deliveryMethod }
-    console.log('ini adalah params = ', productId,);
-    Product.update(data, { where: { productId: productId }})
-        .then((result) => {
-            formatResult(res, 201, true, "Update Success", result);
+  const productId = req.params.id;
+  Product.update(req.body, { where: { id: productId } })
+    .then((result) => {
+      if (result[0] === 1) {
+        Product.findOne({ where: { id: productId } }).then((resultNew) => {
+          resultNew.deliveryMethod = JSON.parse(resultNew.deliveryMethod);
+          resultNew.size = JSON.parse(resultNew.size);
+          formatResult(res, 200, true, "Update Success", resultNew);
+        });
+      } else {
+        formatResult(res, 400, false, "Error While Update Product", null);
+      }
+    })
+    .catch((err) => {
+      formatResult(res, 500, false, err, null);
+    });
+};
+
+exports.getDataByCategory = (req, res) => {
+  console.log(req.params);
+  Product.findAll({
+    where:{category:req.params.category}})
+    .then((result)=>{
+      if (result.length > 0) {
+        const dataResult = result.map((item) => {
+          item.size = JSON.parse(item.size);
+          item.deliveryMethod = JSON.parse(item.deliveryMethod);
+          return item;
         })
-        .catch((err) => {
-            formatResult(res, 500, false, err, null);
-        })
+        console.log('95',dataResult[0].dataValues);
+      }
+      formatResult(res, 200, true, "Success Get Product!", result[0].dataValues);
+    })
+    .catch((err) => {
+      formatResult(res, 500, false, err, null);
+    });
 }
