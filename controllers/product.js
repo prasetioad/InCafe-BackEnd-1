@@ -3,7 +3,6 @@ const formatResult = require("../helpers/formatResult");
 const Product = db.product;
 
 exports.create = (req, res) => {
-  console.log(req.body);
     Product.create(req.body)
       .then((result) => {
         formatResult(res, 201, true, "Product Created!", result.dataValues);
@@ -18,11 +17,10 @@ exports.getData = (req, res) => {
     .then((result) => {
         if(result.length > 0){
             const dataResult = result.map((item)=>{
-                item.size = JSON.parse(item.size)
+                item.size =   
                 item.deliveryMethod = JSON.parse(item.deliveryMethod)
                 return item
             })
-            console.log(dataResult);
         }
       formatResult(res, 200, true, "Success Get Product!", result);
     })
@@ -33,7 +31,6 @@ exports.getData = (req, res) => {
 
 exports.getDataById =(req, res) =>{
     const productId = req.params.id
-    console.log(productId);
     Product.findAll({
         where: {id: productId},
         attributes: ['id', 'name', 'price','description', 'size', 'startHour', 'endHour', 'stock', 'deliveryMethod', 'image']
@@ -45,9 +42,7 @@ exports.getDataById =(req, res) =>{
             item.deliveryMethod = JSON.parse(item.deliveryMethod)
             return item
         })
-        console.log(dataResult);
     }
-        console.log(productId, result);
         formatResult(res, 200, true, "Success Get Product!", result);
     })
     .catch((err) =>{
@@ -55,8 +50,7 @@ exports.getDataById =(req, res) =>{
     })
 }
 
-exports.deleteData = (req, res) =>{   
-    console.log(req.params.id);    
+exports.deleteData = (req, res) =>{
     Product.destroy({
         where: {
             id: req.params.id
@@ -72,7 +66,6 @@ exports.deleteData = (req, res) =>{
 
 exports.updateData = (req, res) => {
     const movieId = req.params.movieId
-    console.log(req.body);
     Product.update(req.body, { where: { id: movieId }})
         .then((result) => {
             formatResult(res, 201, true, "Update Success", result);
