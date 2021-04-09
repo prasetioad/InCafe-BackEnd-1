@@ -13,5 +13,7 @@ db.sequelize = sequelize;
 
 db.user = require("./user")(sequelize, Sequelize);
 db.product = require("./product")(sequelize, Sequelize);
+db.ordered = require("./ordered_product")(sequelize, Sequelize);
+db.transaction = require("./transaction")(sequelize, Sequelize);
 
-module.exports = db; 
+module.exports = db;
