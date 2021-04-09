@@ -3,26 +3,26 @@ const formatResult = require("../helpers/formatResult");
 const Product = db.product;
 
 exports.create = (req, res) => {
-    Product.create(req.body)
-      .then((result) => {
-        formatResult(res, 201, true, "Product Created!", result.dataValues);
-      })
-      .catch((err) => {
-        formatResult(res, 500, false, err, null);
-      });
+  Product.create(req.body)
+    .then((result) => {
+      formatResult(res, 201, true, "Product Created!", result.dataValues);
+    })
+    .catch((err) => {
+      formatResult(res, 500, false, err, null);
+    });
 };
 
 exports.getData = (req, res) => {
   Product.findAll()
     .then((result) => {
-        if(result.length > 0){
-            const dataResult = result.map((item)=>{
-                item.size = JSON.parse(item.size)
-                item.deliveryMethod = JSON.parse(item.deliveryMethod)
-                return item
-            })
-            console.log(dataResult);
-        }
+      if (result.length > 0) {
+        const dataResult = result.map((item) => {
+          item.size = JSON.parse(item.size);
+          item.deliveryMethod = JSON.parse(item.deliveryMethod);
+          return item;
+        });
+        console.log(dataResult);
+      }
       formatResult(res, 200, true, "Success Get Product!", result);
     })
     .catch((err) => {
@@ -30,45 +30,52 @@ exports.getData = (req, res) => {
     });
 };
 
-exports.getDataById =(req, res) =>{
-    const productId = req.params.id
-    console.log(productId);
-    Product.findAll({
-        where: {id: productId},
-        attributes: ['id', 'name', 'price','description', 'size', 'startHour', 'endHour', 'stock', 'deliveryMethod', 'image']
-      })
-    .then((result)=>{
-        console.log(productId, result);
-        formatResult(res, 200, true, "Success Get Product!", result);
+exports.getDataById = (req, res) => {
+  const id = req.params.id;
+  Product.findOne({
+    where: { id },
+    order: ["id"],
+  })
+    .then((result) => {
+      result.size = JSON.parse(result.size);
+      result.deliveryMethod = JSON.parse(result.deliveryMethod);
+      formatResult(res, 200, true, "Success Get Product!", result);
     })
-    .catch((err) =>{
-        formatResult(res, 500, false, err, "Smething Wrong!");
-    })
-}
+    .catch(() => {
+      formatResult(res, 404, false, "productId Not Found", null);
+    });
+};
 
-exports.deleteData = (req, res) =>{   
-    console.log(req.params.id);    
-    Product.destroy({
-        where: {
-            id: req.params.id
-          }
+exports.deleteData = (req, res) => {
+  Product.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then(() => {
+      formatResult(res, 201, true, "Product Deleted!", null);
     })
-    .then((result) =>{
-        formatResult(res, 201, true, "Product Deleted!", result);
-    })
-    .catch((err)=>{
-        formatResult(res, 500, false, " Fail Delete Product!", err); 
-    })
-}
+    .catch((err) => {
+      formatResult(res, 500, false, err, null);
+    });
+};
 
 exports.updateData = (req, res) => {
-    const productId = req.params.id
-    console.log('ini adalah params = ', productId,);
-    Product.update(req.body, { where: { id: productId }})
-        .then((result) => {
-            formatResult(res, 201, true, "Update Success", result);
-        })
-        .catch((err) => {
-            formatResult(res, 500, false, err, null);
-        })
-}
+  const productId = req.params.id;
+  console.log("ini adalah params = ", productId);
+  Product.update(req.body, { where: { id: productId } })
+    .then((result) => {
+      if (result[0] === 1) {
+        Product.findOne({ where: { id: productId } }).then((resultNew) => {
+          resultNew.deliveryMethod = JSON.parse(resultNew.deliveryMethod);
+          resultNew.size = JSON.parse(resultNew.size);
+          formatResult(res, 200, true, "Update Success", resultNew);
+        });
+      } else {
+        formatResult(res, 400, false, "Error While Update Product", null);
+      }
+    })
+    .catch((err) => {
+      formatResult(res, 500, false, err, null);
+    });
+};
