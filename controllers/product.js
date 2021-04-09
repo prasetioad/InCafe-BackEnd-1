@@ -3,6 +3,7 @@ const formatResult = require("../helpers/formatResult");
 const Product = db.product;
 
 exports.create = (req, res) => {
+  console.log(req.body);
     Product.create(req.body)
       .then((result) => {
         formatResult(res, 201, true, "Product Created!", result.dataValues);
@@ -38,6 +39,14 @@ exports.getDataById =(req, res) =>{
         attributes: ['id', 'name', 'price','description', 'size', 'startHour', 'endHour', 'stock', 'deliveryMethod', 'image']
       })
     .then((result)=>{
+      if(result.length > 0){
+        const dataResult = result.map((item)=>{
+            item.size = JSON.parse(item.size)
+            item.deliveryMethod = JSON.parse(item.deliveryMethod)
+            return item
+        })
+        console.log(dataResult);
+    }
         console.log(productId, result);
         formatResult(res, 200, true, "Success Get Product!", result);
     })
@@ -62,9 +71,9 @@ exports.deleteData = (req, res) =>{
 }
 
 exports.updateData = (req, res) => {
-    const productId = req.params.id
-    console.log('ini adalah params = ', productId,);
-    Product.update(req.body, { where: { id: productId }})
+    const movieId = req.params.movieId
+    console.log(req.body);
+    Product.update(req.body, { where: { id: movieId }})
         .then((result) => {
             formatResult(res, 201, true, "Update Success", result);
         })

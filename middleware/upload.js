@@ -4,7 +4,7 @@ require("dotenv").config(); // Import env Config
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    if (req.route.path === "/:movieId" || req.route.stack[2].name === "inputMovie") {
+    if (req.route.path === "/:movieId" || req.route.path === "/") {
       req.body.image = `${process.env.HOST}${process.env.STATIC_FOLDER}/${
         Date.now() + "_" + file.originalname
       }`;
@@ -15,11 +15,11 @@ const storage = multer.diskStorage({
     }
     cb(null, "./upload");
   },
-  filename: function (reqs, file, cb) {
+  filename: function (req, file, cb) {
     cb(null, Date.now() + "_" + file.originalname);
   },
 });
-
+ 
 const upload = (name) =>
   multer({
     storage: storage,
@@ -51,7 +51,7 @@ const middleUpload = (key) => (req, res, next) => {
       }
     } else {
       next();
-    }
+    } 
   });
 };
 

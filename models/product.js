@@ -1,13 +1,13 @@
 module.exports = (sequelize, Sequelize) => {
     const Product = sequelize.define("product", {
-      productId: {
-        type: Sequelize.STRING,
-      },
       name: {
         type: Sequelize.STRING(64),
       },
       price: {
           type: Sequelize.STRING(11)
+      },
+      promoCode: {
+          type: Sequelize.STRING(8)
       },
       description:{
           type: Sequelize.STRING(225)
