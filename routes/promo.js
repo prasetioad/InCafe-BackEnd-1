@@ -8,6 +8,6 @@ router.get("/", promo.getData);
 router.delete("/:id", promo.deleteData);
 router.get("/:id", promo.getDataById);
 router.put("/:id", promo.updateData)
-router.get("/:promoCode", promo.getDataByPromoCode);
+// router.get("/:promoCode", promo.getDataByPromoCode);
 
 module.exports = router;

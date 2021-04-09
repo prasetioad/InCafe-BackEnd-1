@@ -21,7 +21,6 @@ exports.getData = (req, res) => {
           item.deliveryMethod = JSON.parse(item.deliveryMethod);
           return item;
         });
-        console.log(dataResult);
       }
       formatResult(res, 200, true, "Success Get Product!", result);
     })
