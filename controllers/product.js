@@ -21,7 +21,7 @@ exports.getData = (req, res) => {
           item.deliveryMethod = JSON.parse(item.deliveryMethod);
           return item;
         });
-        formatResult(res, 200, true, "Success Get Product!", result);
+        formatResult(res, 200, true, "Success Get Product!", dataResult);
       } else {
         formatResult(res, 404, false, "Product Not Found", null);
       }

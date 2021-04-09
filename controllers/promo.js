@@ -59,7 +59,7 @@ exports.getData = (req, res) => {
           item.deliveryMethod = JSON.parse(item.deliveryMethod);
           return item;
         });
-        formatResult(res, 200, true, "Success Get Promo!", result);
+        formatResult(res, 200, true, "Success Get Promo!", dataResult);
       })
       .catch((err) => {
         formatResult(res, 500, false, err, null);
