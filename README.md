@@ -3,13 +3,15 @@
 ># About
 Backend Project created by [Rama Seftiansyah](https://github.com/therevolt)(therevolt) & [Wisnu Prasetio](https://github.com/prasetioad)(prasetioad) <br>
 
-># Feature
-* User API
-* Product API
-* Transaction API
-* Coupon API
-* Feedback API
-* Category API
+># Endpoint Details
+| Endpoint      | Method           | Info |
+| ------------- |:-------------:|:---|
+| /v1/users  | `POST` `GET` `PUT` `DELETE` | User |
+| /v1/product | `POST` `GET` `PUT` `DELETE` | Product |
+| /v1/order | `POST` | Ordered Product |
+| /v1/trx | `POST` `GET` `DELETE` | Transaction |
+| /v1/promo | `POST` `GET` `PUT` `DELETE` | Promo |
+| /v1/feedback | `POST` `GET` `PUT` `DELETE` | Feedback |
 
 <br>
 
@@ -17,6 +19,9 @@ Backend Project created by [Rama Seftiansyah](https://github.com/therevolt)(ther
 
 * Node Js
 * Express JS
+* **JWT** for Authentication
+* **Nodemailer** for Mailer
+* **Multer** for Upload file
 
 <br>
 
@@ -30,47 +35,18 @@ git clone https://github.com/therevolt/InCafe-BackEnd.git
 ```
 cd InCafe-BackEnd
 ```
-### Run project
+### Run Project
+##### For Development
 ```
 npm run dev
 ```
-># API
-### User
+##### For Production
 ```
-localhost:8080/v1/users
+node app.js
 ```
-### Product
-```
-localhost:8080/v1/product
-```
-### Transaction
-```
-localhost:8080/v1/transaction
-```
-### Promo
-```
-localhost:8080/v1/promo
-```
-### Feedback
-```
-localhost:8080/v1/feedback
-```
-### Category
-```
-localhost:8080/v1/cat
-```
-
-
-<br>
-
-># MiddleWare
-* Auhtentication with **JWT**
-* Mailer with **Nodemailer**
-* upload file with **Multer**
-
-<br>
 
 ># Documentation
+### Postman : https://documenter.getpostman.com/view/10780576/TzCS4R8Q
 *Created in 05 - 10 April 2021* 
 - [Rama Seftiansyah](https://github.com/therevolt)
 - [WIsnu Prasetio](https://github.com/prasetioad)
