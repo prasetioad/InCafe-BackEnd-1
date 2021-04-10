@@ -13,10 +13,10 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.JSON,
     },
     startDate: {
-      type: Sequelize.STRING(28),
+      type: Sequelize.DATEONLY,
     },
     expiredDate: {
-      type: Sequelize.INTEGER(28),
+      type: Sequelize.DATEONLY,
     },
     deliveryMethod: {
       type: Sequelize.JSON,
