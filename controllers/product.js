@@ -101,7 +101,6 @@ exports.updateData = (req, res) => {
       formatResult(res, 500, false, err, null);
     });
 };
-<<<<<<< HEAD
 
 exports.getDataByCategory = (req, res) => {
   console.log(req.params);
@@ -122,5 +121,3 @@ exports.getDataByCategory = (req, res) => {
       formatResult(res, 500, false, err, null);
     });
 }
-=======
->>>>>>> cf30ca99945bf30f1611e778f8cb145e0ffe7f5d

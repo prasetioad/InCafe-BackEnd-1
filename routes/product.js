@@ -12,8 +12,4 @@ router.post("/cat", product.getDataByCategory);
 router.put("/:id", AuthAdmin, middleUpload("image"), product.updateData);
 router.post("/category/:category", product.getDataByCategory)
 
-<<<<<<< HEAD
 module.exports = router; 
-=======
-module.exports = router;
->>>>>>> cf30ca99945bf30f1611e778f8cb145e0ffe7f5d
