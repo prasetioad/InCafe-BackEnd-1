@@ -32,8 +32,6 @@ exports.getData = (req, res) => {
 };
 
 exports.getDataById = (req, res) => {
-  
-  console.log(req.params);
   const id = req.params.id;
   Product.findOne({
     where: { id },
@@ -101,23 +99,3 @@ exports.updateData = (req, res) => {
       formatResult(res, 500, false, err, null);
     });
 };
-
-exports.getDataByCategory = (req, res) => {
-  console.log(req.params);
-  Product.findAll({
-    where:{category:req.params.category}})
-    .then((result)=>{
-      if (result.length > 0) {
-        const dataResult = result.map((item) => {
-          item.size = JSON.parse(item.size);
-          item.deliveryMethod = JSON.parse(item.deliveryMethod);
-          return item;
-        })
-        console.log('95',dataResult[0].dataValues);
-      }
-      formatResult(res, 200, true, "Success Get Product!", result[0].dataValues);
-    })
-    .catch((err) => {
-      formatResult(res, 500, false, err, null);
-    });
-}
