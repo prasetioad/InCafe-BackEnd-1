@@ -5,5 +5,6 @@ const router = require("express").Router();
 
 router.post("/", Auth, ordered.input);
 router.get("/", Auth, ordered.history);
+router.delete("/:id", Auth, ordered.delete);
 
 module.exports = router;

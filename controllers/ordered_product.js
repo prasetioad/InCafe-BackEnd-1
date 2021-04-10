@@ -98,6 +98,7 @@ exports.history = (req, res) => {
             async (resultProduct) => {
               await Trx.findOne({ where: { id: result[i].transactionId } }).then((resultTrx) => {
                 json = {
+                  id: result[i].id,
                   image: resultProduct.image,
                   name: resultProduct.name,
                   price: resultProduct.price,
@@ -116,4 +117,26 @@ exports.history = (req, res) => {
     .catch((err) => {
       formatResult(res, 500, false, err, null);
     });
+};
+
+exports.delete = (req, res) => {
+  if (req.body.role === "admin") {
+    OrderedProduct.destroy({ where: { id: req.params.id } })
+      .then((result) => {
+        if (result === 1) {
+          formatResult(res, 200, true, "Success Delete Order", null);
+        } else {
+          formatResult(res, 404, false, "History Not Found", null);
+        }
+      })
+      .catch(() => {
+        formatResult(res, 500, false, "Internal Server Error", null);
+      });
+  } else {
+    const decode = decodeToken(req);
+    const userId = decode.userId;
+    OrderedProduct.destroy({ where: { id: req.params.id, userId } }).then((result) => {
+      console.log(result);
+    });
+  }
 };
