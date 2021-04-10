@@ -26,12 +26,12 @@ Backend Project created by [Rama Seftiansyah](https://github.com/therevolt)(ther
 <br>
 
 ># How To Use ?
-### Clone this repo
+### Clone This Repo
 ```
 git clone https://github.com/therevolt/InCafe-BackEnd.git
 ```
-### Go to folder
-* open GitBash / terminal 
+### Go To Folder
+Open GitBash / Terminal
 ```
 cd InCafe-BackEnd
 ```
