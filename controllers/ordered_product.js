@@ -84,3 +84,36 @@ exports.input = (req, res) => {
     formatResult(res, 400, false, "You Don't Have Transaction", null);
   }
 };
+
+exports.history = (req, res) => {
+  const decode = decodeToken(req);
+  const userId = decode.userId;
+  OrderedProduct.findAll({ where: { userId } })
+    .then(async (result) => {
+      if (result.length > 0) {
+        const newResult = [];
+        for (let i in result) {
+          let json;
+          await Product.findOne({ where: { id: result[i].productId } }).then(
+            async (resultProduct) => {
+              await Trx.findOne({ where: { id: result[i].transactionId } }).then((resultTrx) => {
+                json = {
+                  image: resultProduct.image,
+                  name: resultProduct.name,
+                  price: resultProduct.price,
+                  status: resultTrx.statusOrder,
+                };
+                newResult.push(json);
+              });
+            }
+          );
+        }
+        formatResult(res, 200, true, "Success Get History Order", newResult);
+      } else {
+        formatResult(res, 404, false, "Cannot Find History Order", null);
+      }
+    })
+    .catch((err) => {
+      formatResult(res, 500, false, err, null);
+    });
+};
