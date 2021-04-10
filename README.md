@@ -1,7 +1,7 @@
 # InCafe-BackEnd
 
 ># About
-Backend Project created by [Rama Seftiansyah](https://github.com/therevolt)(therevolt) & [Wisnu Prasetio](https://github.com/prasetioad)(prasetioad) <br>
+Backend Project InCafe Website
 
 ># Endpoint Details
 | Endpoint      | Method           | Info |
