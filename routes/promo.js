@@ -1,13 +1,11 @@
 const promo = require("../controllers/promo");
-const { route } = require("./promo");
+const { AuthAdmin, Auth } = require("../middleware/auth");
 
 const router = require("express").Router();
 
-router.post("/", promo.create);
-router.get("/", promo.getData);
-router.delete("/:id", promo.deleteData);
-router.get("/:id", promo.getDataById);
-router.put("/:id", promo.updateData)
-// router.get("/:promoCode", promo.getDataByPromoCode);
+router.post("/", AuthAdmin, promo.create);
+router.get("/", Auth, promo.getData);
+router.delete("/:id", AuthAdmin, promo.deleteData);
+router.put("/:id", AuthAdmin, promo.updateData);
 
 module.exports = router;

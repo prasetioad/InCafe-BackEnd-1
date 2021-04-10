@@ -21,8 +21,10 @@ exports.getData = (req, res) => {
           item.deliveryMethod = JSON.parse(item.deliveryMethod);
           return item;
         });
+        formatResult(res, 200, true, "Success Get Product!", dataResult);
+      } else {
+        formatResult(res, 404, false, "Product Not Found", null);
       }
-      formatResult(res, 200, true, "Success Get Product!", result);
     })
     .catch((err) => {
       formatResult(res, 500, false, err, null);
@@ -44,6 +46,26 @@ exports.getDataById = (req, res) => {
     })
     .catch(() => {
       formatResult(res, 404, false, "productId Not Found", null);
+    });
+};
+
+exports.getDataByCategory = (req, res) => {
+  const category = req.body.category;
+  Product.findAll({ where: { category } })
+    .then((result) => {
+      if (result.length > 0) {
+        const dataResult = result.map((item) => {
+          item.size = JSON.parse(item.size);
+          item.deliveryMethod = JSON.parse(item.deliveryMethod);
+          return item;
+        });
+        formatResult(res, 200, true, "Success Get Product", dataResult);
+      } else {
+        formatResult(res, 404, false, "Product Not Found");
+      }
+    })
+    .catch((err) => {
+      formatResult(res, 500, false, "Internal Server Error", null);
     });
 };
 
@@ -79,6 +101,7 @@ exports.updateData = (req, res) => {
       formatResult(res, 500, false, err, null);
     });
 };
+<<<<<<< HEAD
 
 exports.getDataByCategory = (req, res) => {
   console.log(req.params);
@@ -99,3 +122,5 @@ exports.getDataByCategory = (req, res) => {
       formatResult(res, 500, false, err, null);
     });
 }
+=======
+>>>>>>> cf30ca99945bf30f1611e778f8cb145e0ffe7f5d
