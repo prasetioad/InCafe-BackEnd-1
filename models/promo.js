@@ -16,7 +16,7 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.STRING(28),
     },
     expiredDate: {
-      type: Sequelize.INTEGER(28),
+      type: Sequelize.STRING(28),
     },
     deliveryMethod: {
       type: Sequelize.JSON,
