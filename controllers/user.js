@@ -143,7 +143,13 @@ exports.requestResetPassword = (req, res) => {
       .then((result) => {
         if (result) {
           const TokenReset = getTokenReset(req.body);
-          formatResult(res, 200, true, "Success Request Reset Password", { token: TokenReset });
+          sendMail(email, {
+            name: req.body.email.split("@")[0],
+            text: `Anda Melakukan Request Untuk Reset Password`,
+            url: `${process.env.DOMAIN}/reset?token=${TokenReset}`,
+            textBtn: "Reset Now",
+          });
+          formatResult(res, 200, true, "Success Request Reset Password", null);
         } else {
           formatResult(res, 404, false, "Email Not Registered", null);
         }
