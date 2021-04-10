@@ -3,6 +3,7 @@ const formatResult = require("../helpers/formatResult");
 const Promo = db.promo;
 
 exports.create = (req, res) => {
+  req.body.promoCode = req.body.promoCode.toUpperCase();
   Promo.create(req.body)
     .then((result) => {
       formatResult(res, 201, true, "Promo Created!", result.dataValues);
