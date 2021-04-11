@@ -103,7 +103,8 @@ exports.history = (req, res) => {
                     id: result[i].id,
                     image: resultProduct.image,
                     name: resultProduct.name,
-                    price: resultProduct.price,
+                    price: parseInt(resultProduct.price),
+                    totalPayment: resultTrx.totalPayment,
                     status: resultTrx.statusOrder,
                   };
                   newResult.push(json);
