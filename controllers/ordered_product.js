@@ -97,16 +97,18 @@ exports.history = (req, res) => {
           let json;
           await Product.findOne({ where: { id: result[i].productId } }).then(
             async (resultProduct) => {
-              await Trx.findOne({ where: { id: result[i].transactionId } }).then((resultTrx) => {
-                json = {
-                  id: result[i].id,
-                  image: resultProduct.image,
-                  name: resultProduct.name,
-                  price: resultProduct.price,
-                  status: resultTrx.statusOrder,
-                };
-                newResult.push(json);
-              });
+              if (resultProduct) {
+                await Trx.findOne({ where: { id: result[i].transactionId } }).then((resultTrx) => {
+                  json = {
+                    id: result[i].id,
+                    image: resultProduct.image,
+                    name: resultProduct.name,
+                    price: resultProduct.price,
+                    status: resultTrx.statusOrder,
+                  };
+                  newResult.push(json);
+                });
+              }
             }
           );
         }
