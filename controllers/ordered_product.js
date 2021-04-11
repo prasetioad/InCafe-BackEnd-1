@@ -88,7 +88,8 @@ exports.input = (req, res) => {
 exports.history = (req, res) => {
   const decode = decodeToken(req);
   const userId = decode.userId;
-  OrderedProduct.findAll({ where: { userId } })
+  let sort = req.query.sort ? req.query.sort.toUpperCase() : "DESC";
+  OrderedProduct.findAll({ where: { userId }, order: [["createdAt", sort]] })
     .then(async (result) => {
       if (result.length > 0) {
         const newResult = [];
