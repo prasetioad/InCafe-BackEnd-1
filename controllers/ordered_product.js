@@ -139,8 +139,14 @@ exports.delete = (req, res) => {
   } else {
     const decode = decodeToken(req);
     const userId = decode.userId;
-    OrderedProduct.destroy({ where: { id: req.params.id, userId } }).then((result) => {
-      console.log(result);
-    });
+    OrderedProduct.destroy({ where: { id: req.params.id, userId } })
+      .then((result) => {
+        if (result === 1) {
+          formatResult(res, 200, true, "Success Delete Order", null);
+        }
+      })
+      .catch((err) => {
+        formatResult(res, 500, false, err, null);
+      });
   }
 };
