@@ -16,12 +16,7 @@ exports.getData = (req, res) => {
   Product.findAll()
     .then((result) => {
       if (result.length > 0) {
-        const dataResult = result.map((item) => {
-          item.size = JSON.parse(item.size);
-          item.deliveryMethod = JSON.parse(item.deliveryMethod);
-          return item;
-        });
-        formatResult(res, 200, true, "Success Get Product!", dataResult);
+        formatResult(res, 200, true, "Success Get Product!", result);
       } else {
         formatResult(res, 404, false, "Product Not Found", null);
       }
