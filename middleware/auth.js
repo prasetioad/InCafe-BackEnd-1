@@ -42,7 +42,7 @@ const AuthAdmin = (req, res, next) => {
         } else if (err.message === "jwt expired") {
           formatResult(res, 400, false, "Token Expired", null);
         } else {
-          formatResult(req, 400, false, "Invalid Signature", null);
+          formatResult(res, 400, false, "Invalid Signature", null);
         }
       }
     });
@@ -65,7 +65,7 @@ const AuthRefresh = (req, res, next) => {
         } else if (err.message === "jwt expired") {
           formatResult(res, 400, false, "Token Expired", null);
         } else {
-          formatResult(req, 400, false, "Invalid Signature", null);
+          formatResult(res, 400, false, "Invalid Signature", null);
         }
       }
     });
@@ -88,7 +88,7 @@ const AuthVerif = (req, res, next) => {
         } else if (err.message === "jwt expired") {
           formatResult(res, 400, false, "Token Expired", null);
         } else {
-          formatResult(req, 400, false, "Invalid Signature", null);
+          formatResult(res, 400, false, "Invalid Signature", null);
         }
       }
     });

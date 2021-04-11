@@ -1,5 +1,7 @@
 const db = require("../models");
 const formatResult = require("../helpers/formatResult");
+const getPagination = require("../helpers/getPagination");
+const getPagingData = require("../helpers/getPagingData");
 const Product = db.product;
 
 exports.create = (req, res) => {
@@ -13,17 +15,34 @@ exports.create = (req, res) => {
 };
 
 exports.getData = (req, res) => {
-  Product.findAll()
-    .then((result) => {
-      if (result.length > 0) {
-        formatResult(res, 200, true, "Success Get Product!", result);
-      } else {
-        formatResult(res, 404, false, "Product Not Found", null);
-      }
-    })
-    .catch((err) => {
-      formatResult(res, 500, false, err, null);
-    });
+  const { page, size } = req.query;
+  if (page && size) {
+    const { limit, offset } = getPagination(page, size);
+    Product.findAndCountAll({ limit: parseInt(limit), offset: parseInt(offset) })
+      .then((result) => {
+        if (result.rows.length > 0) {
+          const newResult = getPagingData(result, page, limit);
+          formatResult(res, 200, true, "Success Get Product!", newResult);
+        } else {
+          formatResult(res, 404, false, "Product Not Found", null);
+        }
+      })
+      .catch((err) => {
+        formatResult(res, 500, false, err, null);
+      });
+  } else {
+    Product.findAll()
+      .then((result) => {
+        if (result.length > 0) {
+          formatResult(res, 200, true, "Success Get Product!", result);
+        } else {
+          formatResult(res, 404, false, "Product Not Found", null);
+        }
+      })
+      .catch((err) => {
+        formatResult(res, 500, false, err, null);
+      });
+  }
 };
 
 exports.getDataById = (req, res) => {
