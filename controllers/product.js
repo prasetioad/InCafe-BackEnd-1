@@ -2,6 +2,7 @@ const db = require("../models");
 const formatResult = require("../helpers/formatResult");
 const getPagination = require("../helpers/getPagination");
 const getPagingData = require("../helpers/getPagingData");
+const { Op } = require("sequelize");
 const Product = db.product;
 
 exports.create = (req, res) => {
@@ -52,17 +53,45 @@ exports.getData = (req, res) => {
         });
     }
   } else {
-    Product.findAll()
-      .then((result) => {
-        if (result.length > 0) {
-          formatResult(res, 200, true, "Success Get Product!", result);
-        } else {
-          formatResult(res, 404, false, "Product Not Found", null);
-        }
+    if (req.query.name) {
+      const name = req.query.name;
+      Product.findAll({
+        where: { name: { [Op.like]: `%${name}%` } },
       })
-      .catch((err) => {
-        formatResult(res, 500, false, err, null);
-      });
+        .then((result) => {
+          if (result.length > 0) {
+            const dataResult = result.map((item) => {
+              item.size = JSON.parse(item.size);
+              item.deliveryMethod = JSON.parse(item.deliveryMethod);
+              return item;
+            });
+            formatResult(res, 200, true, "Success Search Product!", result);
+          } else {
+            formatResult(res, 404, false, "Product Not Found", null);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          formatResult(res, 404, false, "productId Not Found", null);
+        });
+    } else {
+      Product.findAll()
+        .then((result) => {
+          if (result.length > 0) {
+            const dataResult = result.map((item) => {
+              item.size = JSON.parse(item.size);
+              item.deliveryMethod = JSON.parse(item.deliveryMethod);
+              return item;
+            });
+            formatResult(res, 200, true, "Success Get Product!", dataResult);
+          } else {
+            formatResult(res, 404, false, "Product Not Found", null);
+          }
+        })
+        .catch((err) => {
+          formatResult(res, 500, false, err, null);
+        });
+    }
   }
 };
 
