@@ -55,8 +55,9 @@ exports.getData = (req, res) => {
   } else {
     if (req.query.name) {
       const name = req.query.name;
+      const category = req.query.category ? req.query.category : "";
       Product.findAll({
-        where: { name: { [Op.like]: `%${name}%` } },
+        where: { name: { [Op.like]: `%${name}%` }, category },
       })
         .then((result) => {
           if (result.length > 0) {
@@ -65,7 +66,7 @@ exports.getData = (req, res) => {
               item.deliveryMethod = JSON.parse(item.deliveryMethod);
               return item;
             });
-            formatResult(res, 200, true, "Success Search Product!", result);
+            formatResult(res, 200, true, "Success Search Product!", dataResult);
           } else {
             formatResult(res, 404, false, "Product Not Found", null);
           }
