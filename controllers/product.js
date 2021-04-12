@@ -55,9 +55,9 @@ exports.getData = (req, res) => {
   } else {
     if (req.query.name) {
       const name = req.query.name;
-      const category = req.query.category ? req.query.category : "";
+      const category = req.query.category ? req.query.category : null;
       Product.findAll({
-        where: { name: { [Op.like]: `%${name}%` }, category },
+        where: { name: { [Op.like]: `%${name}%` }, category: category },
       })
         .then((result) => {
           if (result.length > 0) {
