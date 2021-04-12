@@ -100,11 +100,13 @@ exports.login = async (req, res) => {
   }
 };
 
-exports.update = (req, res) => {
+exports.update = async (req, res) => {
   const verify = verifyToken(req);
   if (verify !== true) return formatResult(res, 400, false, verify, null);
   const decode = decodeToken(req);
   const userId = decode.userId;
+  if (req.body.password)
+    req.body.password = await bcrypt.hash(req.body.password, 10).then((result) => result);
   User.update(req.body, { where: { userId }, order: ["userId"] })
     .then(() => {
       User.findOne({ where: { userId }, order: ["userId"] })

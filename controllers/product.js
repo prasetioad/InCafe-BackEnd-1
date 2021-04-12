@@ -17,19 +17,40 @@ exports.create = (req, res) => {
 exports.getData = (req, res) => {
   const { page, size } = req.query;
   if (page && size) {
-    const { limit, offset } = getPagination(page, size);
-    Product.findAndCountAll({ limit: parseInt(limit), offset: parseInt(offset) })
-      .then((result) => {
-        if (result.rows.length > 0) {
-          const newResult = getPagingData(result, page, limit);
-          formatResult(res, 200, true, "Success Get Product!", newResult);
-        } else {
-          formatResult(res, 404, false, "Product Not Found", null);
-        }
+    if (req.body.category) {
+      const category = req.body.category;
+      const { limit, offset } = getPagination(page, size);
+      Product.findAndCountAll({
+        where: { category },
+        limit: parseInt(limit),
+        offset: parseInt(offset),
       })
-      .catch((err) => {
-        formatResult(res, 500, false, err, null);
-      });
+        .then((result) => {
+          if (result.rows.length > 0) {
+            const newResult = getPagingData(result, page, limit);
+            formatResult(res, 200, true, "Success Pagination By Category", newResult);
+          } else {
+            formatResult(res, 404, false, "Product Not Found", null);
+          }
+        })
+        .catch((err) => {
+          formatResult(res, 500, false, err, null);
+        });
+    } else {
+      const { limit, offset } = getPagination(page, size);
+      Product.findAndCountAll({ limit: parseInt(limit), offset: parseInt(offset) })
+        .then((result) => {
+          if (result.rows.length > 0) {
+            const newResult = getPagingData(result, page, limit);
+            formatResult(res, 200, true, "Success Get Product!", newResult);
+          } else {
+            formatResult(res, 404, false, "Product Not Found", null);
+          }
+        })
+        .catch((err) => {
+          formatResult(res, 500, false, err, null);
+        });
+    }
   } else {
     Product.findAll()
       .then((result) => {
@@ -71,7 +92,7 @@ exports.getDataByCategory = (req, res) => {
           item.deliveryMethod = JSON.parse(item.deliveryMethod);
           return item;
         });
-        formatResult(res, 200, true, "Success Get Product", dataResult);
+        formatResult(res, 200, true, "Success Get By Category", dataResult);
       } else {
         formatResult(res, 404, false, "Product Not Found");
       }

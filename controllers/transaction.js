@@ -5,6 +5,32 @@ const Trx = db.transaction;
 const User = db.user;
 const Order = db.ordered;
 const Promo = db.promo;
+const Product = db.product;
+
+const duplicateArray = (array) => {
+  const count = {};
+  const result = [];
+  let json = array.map((item) => item.name);
+
+  json.forEach((item) => {
+    if (count[item]) {
+      count[item] += 1;
+      return;
+    }
+    count[item] = 1;
+  });
+
+  for (let prop in count) {
+    result.push({
+      name: prop,
+      orderItem: count[prop],
+      price: array.filter((el) => el.name === prop).map((el) => el.price)[0],
+      size: array.filter((el) => el.name === prop).map((el) => el.size),
+    });
+  }
+
+  return result;
+};
 
 exports.input = (req, res) => {
   const decode = decodeToken(req);
@@ -56,15 +82,27 @@ exports.input = (req, res) => {
 exports.getProcessTrx = (req, res) => {
   Trx.findAll({ where: { statusOrder: "Process" } })
     .then(async (result) => {
+      const newResult = [];
       if (result.length > 0) {
-        const newResult = [];
         for (let i in result) {
+          const newOrder = [];
           const user = await User.findOne({ where: { userId: result[i].userId } });
+          const order = await Order.findAll({ where: { transactionId: result[i].id } });
+          for (let j in order) {
+            const product = await Product.findOne({ where: { id: order[j].productId } });
+            newOrder.push({
+              name: product.name,
+              price: product.price,
+              size: order[j].sizeProduct,
+            });
+          }
           newResult.push({
             ...result[i].dataValues,
             nameUser: user.dataValues.displayName,
             addressUser: user.dataValues.address,
             phoneUser: user.dataValues.phone,
+            countItemOrder: order.length,
+            ordered_product: duplicateArray(newOrder),
           });
         }
         formatResult(res, 200, true, "Success", newResult);
