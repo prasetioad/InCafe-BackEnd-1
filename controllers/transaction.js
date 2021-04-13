@@ -24,6 +24,7 @@ const duplicateArray = (array) => {
     result.push({
       name: prop,
       orderItem: count[prop],
+      image: array.filter((el) => el.name === prop).map((el) => el.image)[0],
       price: array.filter((el) => el.name === prop).map((el) => el.price)[0],
       size: array.filter((el) => el.name === prop).map((el) => el.size),
     });
