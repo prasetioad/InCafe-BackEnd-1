@@ -92,6 +92,7 @@ exports.getProcessTrx = (req, res) => {
             const product = await Product.findOne({ where: { id: order[j].productId } });
             newOrder.push({
               name: product.name,
+              image: product.image,
               price: product.price,
               size: order[j].sizeProduct,
             });
