@@ -44,9 +44,20 @@ npm run dev
 ```
 node app.js
 ```
+### Front End 
+* https://github.com/ErwinSaputraSulistio/In-Cafe
+
+### InCaffe Demo
+* Netlify : [https://github.com/ErwinSaputraSulistio/In-Cafe](https://github.com/ErwinSaputraSulistio/In-Cafe)
 
 ># Documentation
 ### Postman : https://documenter.getpostman.com/view/10780576/TzCS4R8Q
+
 *Created in 05 - 10 April 2021* 
-- [Rama Seftiansyah](https://github.com/therevolt)
-- [WIsnu Prasetio](https://github.com/prasetioad)
+- [Rama Seftiansyah](https://github.com/therevolt) Backend & Leader
+- [WIsnu Prasetio](https://github.com/prasetioad) Backend
+- [Erwin Saputra](https://github.com/ErwinSaputraSulistio) Frontend
+- [Aditya Pratama](https://github.com/heatclift77) Frontend
+
+
+
