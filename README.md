@@ -59,7 +59,7 @@ node app.js
 
 *Created in 05 - 10 April 2021* 
 - [Rama Seftiansyah](https://github.com/therevolt) Backend & Leader
-- [WIsnu Prasetio](https://github.com/prasetioad) Backend
+- [Wisnu Prasetio](https://github.com/prasetioad) Backend
 - [Erwin Saputra](https://github.com/ErwinSaputraSulistio) Frontend
 - [Aditya Pratama](https://github.com/heatclift77) Frontend
 
