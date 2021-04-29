@@ -48,14 +48,15 @@ node app.js
 ![Untitled-2](https://user-images.githubusercontent.com/66661143/116283200-cf134d80-a7b5-11eb-8658-280097b13dba.jpg)
 ![Untitled-4](https://user-images.githubusercontent.com/66661143/116283204-cfabe400-a7b5-11eb-8c03-ea2bcd95a191.jpg)
 
+># Documentation
+### Postman : https://documenter.getpostman.com/view/10780576/TzCS4R8Q
+
 ### Front End 
 * https://github.com/ErwinSaputraSulistio/In-Cafe
 
 ### InCaffe Demo
 * Netlify : [https://github.com/ErwinSaputraSulistio/In-Cafe](https://github.com/ErwinSaputraSulistio/In-Cafe)
 
-># Documentation
-### Postman : https://documenter.getpostman.com/view/10780576/TzCS4R8Q
 
 *Created in 05 - 10 April 2021* 
 - [Rama Seftiansyah](https://github.com/therevolt) Backend & Leader
