@@ -55,7 +55,7 @@ node app.js
 * https://github.com/ErwinSaputraSulistio/In-Cafe
 
 ### InCaffe Demo
-* Netlify : [https://github.com/ErwinSaputraSulistio/In-Cafe](https://incafe.netlify.app)
+* Netlify : [Visit Here](https://incafe.netlify.app)
 
 
 *Created in 05 - 10 April 2021* 
