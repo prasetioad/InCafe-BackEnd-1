@@ -45,8 +45,25 @@ npm run dev
 node app.js
 ```
 
+![Untitled-2](https://user-images.githubusercontent.com/66661143/116283200-cf134d80-a7b5-11eb-8658-280097b13dba.jpg)
+![Untitled-0](https://user-images.githubusercontent.com/66661143/116283192-cde22080-a7b5-11eb-9367-772813406ba6.jpg)
+![Untitled-4](https://user-images.githubusercontent.com/66661143/116283204-cfabe400-a7b5-11eb-8c03-ea2bcd95a191.jpg)
+
 ># Documentation
 ### Postman : https://documenter.getpostman.com/view/10780576/TzCS4R8Q
+
+### Front End 
+* https://github.com/ErwinSaputraSulistio/In-Cafe
+
+### InCaffe Demo
+* Netlify : [Visit Here](https://incafe.netlify.app)
+
+
 *Created in 05 - 10 April 2021* 
-- [Rama Seftiansyah](https://github.com/therevolt)
-- [WIsnu Prasetio](https://github.com/prasetioad)
+- [Rama Seftiansyah](https://github.com/therevolt) Backend & Leader
+- [Wisnu Prasetio](https://github.com/prasetioad) Backend
+- [Erwin Saputra](https://github.com/ErwinSaputraSulistio) Frontend
+- [Aditya Pratama](https://github.com/heatclift77) Frontend
+
+
+
