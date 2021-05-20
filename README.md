@@ -1,9 +1,12 @@
-# InCafe-BackEnd
+<p align="center">
+  <a href="" rel="noopener">
+ <img width=400px src="https://i.ibb.co/ypgfdYR/Blue-and-Yellow-Buffet-Restaurant-Logo.png" alt="logo"></a>
+</p>
 
-># About
+## About
 Backend Project InCafe Website
 
-># Endpoint Details
+## Endpoint Details
 | Endpoint      | Method           | Info |
 | ------------- |:-------------:|:---|
 | /v1/users  | `POST` `GET` `PUT` `DELETE` | User |
@@ -13,9 +16,7 @@ Backend Project InCafe Website
 | /v1/promo | `POST` `GET` `PUT` `DELETE` | Promo |
 | /v1/feedback | `POST` `GET` `PUT` `DELETE` | Feedback |
 
-<br>
-
-># Build With
+## Build With
 
 * Node Js
 * Express JS
@@ -23,9 +24,7 @@ Backend Project InCafe Website
 * **Nodemailer** for Mailer
 * **Multer** for Upload file
 
-<br>
-
-># How To Use ?
+## How To Use ?
 ### Clone This Repo
 ```
 git clone https://github.com/therevolt/InCafe-BackEnd.git
@@ -34,6 +33,10 @@ git clone https://github.com/therevolt/InCafe-BackEnd.git
 Open GitBash / Terminal
 ```
 cd InCafe-BackEnd
+```
+### Install Module
+```
+npm install
 ```
 ### Run Project
 ##### For Development
@@ -45,11 +48,7 @@ npm run dev
 node app.js
 ```
 
-![Untitled-2](https://user-images.githubusercontent.com/66661143/116283200-cf134d80-a7b5-11eb-8658-280097b13dba.jpg)
-![Untitled-0](https://user-images.githubusercontent.com/66661143/116283192-cde22080-a7b5-11eb-9367-772813406ba6.jpg)
-![Untitled-4](https://user-images.githubusercontent.com/66661143/116283204-cfabe400-a7b5-11eb-8c03-ea2bcd95a191.jpg)
-
-># Documentation
+## Documentation
 ### Postman : https://documenter.getpostman.com/view/10780576/TzCS4R8Q
 
 ### Front End 
