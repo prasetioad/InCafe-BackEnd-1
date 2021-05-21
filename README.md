@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=400px src="https://i.ibb.co/ypgfdYR/Blue-and-Yellow-Buffet-Restaurant-Logo.png" alt="logo"></a>
+ <img width=200px src="https://i.ibb.co/ypgfdYR/Blue-and-Yellow-Buffet-Restaurant-Logo.png" alt="logo"></a>
 </p>
 
 ## About
